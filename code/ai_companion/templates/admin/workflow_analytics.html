@@ -1,0 +1,80 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<div class="dashboard">
+    <h1>Workflow Analytics</h1>
+    
+    <div class="module">
+        <h2>Overall Statistics</h2>
+        <table>
+            <tr>
+                <th>Total Workflows</th>
+                <td>{{ total_workflows }}</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="module">
+        <h2>Workflows by Type</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Count</th>
+                    <th>Avg Steps</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for workflow in workflows_by_type %}
+                <tr>
+                    <td>{{ workflow.type }}</td>
+                    <td>{{ workflow.count }}</td>
+                    <td>{{ workflow.avg_steps|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="module">
+        <h2>Workflow State Distribution</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>State</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for state in state_distribution %}
+                <tr>
+                    <td>{{ state.state }}</td>
+                    <td>{{ state.count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="module">
+        <h2>Most Active Workflow Types</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Total Workflows</th>
+                    <th>Avg Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for type in most_active_types %}
+                <tr>
+                    <td>{{ type.type }}</td>
+                    <td>{{ type.total_workflows }}</td>
+                    <td>{{ type.avg_duration|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %} 

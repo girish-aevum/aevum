@@ -1,0 +1,31 @@
+Aevum Health - New DNA Kit Order
+
+Hello Admin,
+
+A new DNA Kit order has been placed in the system.
+
+Order Details:
+- Order ID: {{ order.order_id }}
+- Kit Type: {{ order.kit_type.name }}
+- Order Date: {{ order.order_date|date:"F d, Y H:i" }}
+- Total Amount: ₹{{ order.total_amount }}
+- Current Status: {{ order.status }}
+
+Customer Details:
+- Name: {{ user_details.first_name }} {{ user_details.last_name }}
+- Email: {{ user_details.email }}
+- Username: {{ user_details.username }}
+- Phone: {{ user_details.phone_number }}
+
+Shipping Address:
+{% if order.shipping_address.street %}{{ order.shipping_address.street }}{% endif %}
+{% if order.shipping_address.city %}{{ order.shipping_address.city }}, {% endif %}{% if order.shipping_address.state %}{{ order.shipping_address.state }}{% endif %}{% if order.shipping_address.zip_code %} - {{ order.shipping_address.zip_code }}{% endif %}
+{{ order.shipping_address.country }}
+
+Please review the order in the admin panel. You can access the order details directly at:
+{{ admin_url }}
+
+Best regards,
+Aevum Health System
+
+© {% now "Y" %} Aevum Health. All rights reserved. 

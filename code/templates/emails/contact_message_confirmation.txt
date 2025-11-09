@@ -1,0 +1,44 @@
+AEVUM HEALTH - We received your message!
+
+Dear {{ user_name }},
+
+Thank you for contacting us! We've successfully received your message and our team will review it shortly. We appreciate you taking the time to reach out to us.
+
+✅ MESSAGE RECEIVED!
+We'll respond to your inquiry as soon as possible.
+
+YOUR MESSAGE DETAILS:
+Message ID: {{ message_id }}
+Subject: {{ subject }}
+Status: Received & Under Review
+
+WHAT TO EXPECT:
+⏰ Response Time: We typically respond within 24-48 hours during business days
+🎯 Priority Support: Urgent matters are handled with higher priority
+📞 Follow-up: We'll reach out if we need any additional information
+✅ Resolution: We'll work with you until your inquiry is fully resolved
+
+NEED IMMEDIATE ASSISTANCE?
+If your inquiry is urgent or you need immediate assistance, you can:
+• Reply directly to this email with "URGENT" in the subject line
+• Contact our support team at {{ support_email }}
+• Visit our website for additional resources and FAQs
+
+WHILE YOU WAIT...
+Learn more about Aevum Health and how we're revolutionizing personalized healthcare:
+• DNA Analysis: Discover your genetic health insights
+• Mental Wellness: Track and improve your mental health
+• AI Companion: Get personalized health recommendations
+• Comprehensive Platform: All your health data in one place
+
+Thank you for choosing Aevum Health. We look forward to assisting you!
+
+Best regards,
+The Aevum Health Support Team
+
+---
+This confirmation was sent because you contacted us through our website.
+Visit our website: https://www.aevum.co.in
+Contact Support: {{ support_email }}
+
+© 2024 Aevum Health. All rights reserved. 

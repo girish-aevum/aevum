@@ -1,0 +1,21 @@
+Aevum Health - DNA Kit Order Confirmation
+
+Hi {{ user_name }},
+
+Thank you for ordering a DNA Kit from Aevum Health! We're excited to help you unlock personalized insights into your genetic health and wellness.
+
+Order Details:
+- Order ID: {{ order_id }}
+- Kit Type: {{ kit_type }}
+- Order Date: {{ order_date|date:"F d, Y" }}
+- Total Amount: ₹{{ total_amount }}
+- Current Status: {{ status }}
+
+Our team will process your order shortly. You'll receive updates about your kit's shipping and processing status.
+
+If you have any questions, please contact our support team at {{ support_email }}.
+
+Best regards,
+Aevum Health Team
+
+© {% now "Y" %} Aevum Health. All rights reserved. 

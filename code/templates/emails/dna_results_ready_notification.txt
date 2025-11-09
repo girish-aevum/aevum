@@ -1,0 +1,32 @@
+Aevum Health - Your DNA Results are Ready!
+
+Hi {{ user_name }},
+
+Great news! Your comprehensive DNA analysis is complete.
+
+Analysis Overview:
+- Order ID: {{ order_id }}
+- Kit Type: {{ kit_type }}
+- Report ID: {{ report_id }}
+- Analysis Date: {{ generated_date|date:"F d, Y" }}
+- Total Traits Analyzed: {{ results_count }}
+
+{% if top_findings %}Top Findings:
+{% for finding in top_findings %}
+- {{ finding }}
+{% endfor %}
+{% endif %}
+
+Recommendations:
+{{ recommendations }}
+
+{% if report_url and report_url != '#' %}
+You can view your full detailed report by visiting: {{ report_url }}
+{% endif %}
+
+If you have any questions about your results, please contact our support team at {{ support_email }}.
+
+Best regards,
+Aevum Health Team
+
+© {% now "Y" %} Aevum Health. All rights reserved. 

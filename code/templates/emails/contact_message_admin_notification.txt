@@ -1,0 +1,45 @@
+AEVUM HEALTH ADMIN - New Contact Message
+
+📨 NEW CONTACT MESSAGE RECEIVED
+
+A new contact message has been submitted through the website. Please review the details below and respond accordingly.
+
+MESSAGE DETAILS:
+===============
+Full Name: {{ message.full_name }}
+Email: {{ message.email }}
+Subject: {{ message.subject }}
+Category: {{ message.get_category_display_name }}
+Priority: {{ message.get_priority_display }}
+Status: {{ message.get_status_display }}
+Message ID: {{ message.message_id }}
+Submitted: {{ message.created_at|date:"M d, Y \a\t g:i A" }}
+{% if message.ip_address %}IP Address: {{ message.ip_address }}{% endif %}
+
+MESSAGE CONTENT:
+===============
+{{ message.message }}
+
+QUICK INFO:
+===========
+Category: {{ message.get_category_display_name }}
+Urgency Level: {{ message.get_priority_display }}
+Time Since Message: Just now
+Auto-assigned Category: {% if message.category != 'GENERAL' %}Yes{% else %}No{% endif %}
+
+RECOMMENDED ACTIONS:
+===================
+• Acknowledge receipt within 2 hours during business hours
+• Categorize the message if auto-classification was unclear
+• Assign to appropriate team member based on category
+• Set priority level based on urgency and content
+• Provide comprehensive response within 24-48 hours
+
+QUICK ACTIONS:
+==============
+Review in Admin: {{ admin_url }}
+Reply to User: mailto:{{ message.email }}?subject=Re: {{ message.subject }}
+
+---
+This notification was sent automatically when a new contact message was submitted.
+Manage in Admin Dashboard: {{ admin_url }} 

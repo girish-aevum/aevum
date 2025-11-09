@@ -1,0 +1,145 @@
+{
+  "create_dna_result_examples": [
+    {
+      "name": "Health Risk Result",
+      "endpoint": "POST /api/dna-profile/lab/results/create/",
+      "payload": {
+        "kit_id": "AEVUM-A1B2C3D4",
+        "category": "HEALTH_RISK",
+        "subcategory": "Cardiovascular",
+        "trait_name": "Type 2 Diabetes Risk",
+        "result_value": "Slightly increased risk (1.3x average)",
+        "confidence_level": "HIGH",
+        "risk_score": 65.5,
+        "genetic_markers": ["rs7903146", "rs12255372"],
+        "methodology": "Polygenic Risk Score",
+        "reference_population": "European",
+        "clinical_significance": "MODERATE",
+        "recommendations": "Maintain healthy diet and regular exercise. Consider annual glucose screening.",
+        "requires_followup": true,
+        "reviewed_by": "Dr. Jane Smith, MD"
+      }
+    },
+    {
+      "name": "Ancestry Result",
+      "endpoint": "POST /api/dna-profile/lab/results/create/",
+      "payload": {
+        "kit_id": "AEVUM-A1B2C3D4",
+        "category": "ANCESTRY",
+        "subcategory": "Ethnicity",
+        "trait_name": "European Ancestry",
+        "result_value": "85% European (45% Northern European, 40% Southern European)",
+        "confidence_level": "HIGH",
+        "genetic_markers": ["rs12345", "rs67890"],
+        "methodology": "SNP Array Analysis",
+        "reference_population": "1000 Genomes Project",
+        "reviewed_by": "Dr. Michael Chen, PhD"
+      }
+    },
+    {
+      "name": "Fitness Result",
+      "endpoint": "POST /api/dna-profile/lab/results/create/",
+      "payload": {
+        "kit_id": "AEVUM-A1B2C3D4",
+        "category": "FITNESS",
+        "subcategory": "Exercise Response",
+        "trait_name": "Muscle Fiber Type",
+        "result_value": "Fast-twitch muscle fiber dominant (70% Type II fibers)",
+        "confidence_level": "MEDIUM",
+        "risk_score": null,
+        "genetic_markers": ["ACTN3", "ACE"],
+        "methodology": "Genotype Analysis",
+        "recommendations": "Optimal for power-based exercises like sprinting and weightlifting.",
+        "reviewed_by": "Dr. Sarah Johnson, PhD"
+      }
+    }
+  ],
+  "create_dna_report_examples": [
+    {
+      "name": "Comprehensive Health Report",
+      "endpoint": "POST /api/dna-profile/lab/reports/create/",
+      "payload": {
+        "kit_id": "AEVUM-A1B2C3D4",
+        "report_type": "COMPREHENSIVE",
+        "summary": "Your comprehensive genetic analysis reveals important insights about your health predispositions, ancestry, and fitness characteristics. This report covers 150+ health conditions, detailed ancestry breakdown, and personalized fitness recommendations based on your unique genetic profile.",
+        "key_findings": [
+          "Increased risk for Type 2 Diabetes (1.3x average risk)",
+          "Normal risk for Heart Disease",
+          "Carrier status for Cystic Fibrosis",
+          "85% European ancestry with diverse regional origins",
+          "Fast-twitch muscle fiber dominance for power athletics",
+          "Enhanced caffeine metabolism"
+        ],
+        "recommendations": "Based on your genetic profile, we recommend: 1) Regular glucose monitoring and diabetes prevention strategies, 2) Maintain heart-healthy lifestyle, 3) Consider genetic counseling for family planning, 4) Focus on power-based fitness activities, 5) Moderate caffeine intake is well-tolerated.",
+        "report_file_url": "https://reports.aevumhealth.com/comprehensive/AEVUM-A1B2C3D4.pdf",
+        "raw_data_url": "https://data.aevumhealth.com/raw/AEVUM-A1B2C3D4.txt",
+        "quality_score": 98.5,
+        "validated_by": "Dr. Robert Wilson, MD, PhD"
+      }
+    },
+    {
+      "name": "Health-Focused Report",
+      "endpoint": "POST /api/dna-profile/lab/reports/create/",
+      "payload": {
+        "kit_id": "AEVUM-B5C6D7E8",
+        "report_type": "CLINICAL",
+        "summary": "Your health-focused genetic analysis identifies key genetic variants that may impact your health risks and medication responses. This clinical-grade report provides actionable insights for you and your healthcare provider.",
+        "key_findings": [
+          "Elevated risk for Alzheimer's Disease (APOE4 carrier)",
+          "Reduced effectiveness of warfarin (CYP2C9 variant)",
+          "Normal BRCA1/BRCA2 status",
+          "Lactose intolerance genetic markers present"
+        ],
+        "recommendations": "Discuss these findings with your healthcare provider. Consider: 1) Enhanced cognitive health monitoring, 2) Alternative anticoagulation if warfarin is prescribed, 3) Continue routine cancer screening, 4) Lactose-free diet may improve digestive comfort.",
+        "report_file_url": "https://reports.aevumhealth.com/clinical/AEVUM-B5C6D7E8.pdf",
+        "quality_score": 99.2,
+        "validated_by": "Dr. Emily Rodriguez, MD"
+      }
+    }
+  ],
+  "required_fields": {
+    "dna_result_create": {
+      "required": [
+        "kit_id",
+        "category", 
+        "trait_name",
+        "result_value",
+        "confidence_level"
+      ],
+      "optional": [
+        "subcategory",
+        "risk_score",
+        "genetic_markers",
+        "methodology",
+        "reference_population",
+        "clinical_significance",
+        "recommendations",
+        "requires_followup",
+        "reviewed_by"
+      ]
+    },
+    "dna_report_create": {
+      "required": [
+        "kit_id",
+        "report_type"
+      ],
+      "optional": [
+        "summary",
+        "key_findings",
+        "recommendations",
+        "report_file_url",
+        "raw_data_url",
+        "quality_score",
+        "validated_by"
+      ]
+    }
+  },
+  "validation_notes": {
+    "kit_id": "Must be a valid DNA kit ID that exists in the system",
+    "category": "Must be one of: ANCESTRY, HEALTH_RISK, CARRIER_STATUS, PHARMACOGENOMICS, TRAITS, FITNESS, WELLNESS",
+    "confidence_level": "Must be one of: HIGH, MEDIUM, LOW",
+    "risk_score": "Must be a number between 0 and 100 (or null)",
+    "report_type": "Must be one of: PRELIMINARY, COMPREHENSIVE, UPDATED, CLINICAL",
+    "quality_score": "Must be a number between 0 and 100 (or null)"
+  }
+} 

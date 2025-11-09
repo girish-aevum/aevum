@@ -1,0 +1,13 @@
+{% extends "admin/index.html" %}
+{% block content %}
+    {{ block.super }}
+    <div class="module">
+        <h2>AI Companion Workflows</h2>
+        <table>
+            <tr>
+                <th>Analytics</th>
+                <td><a href="{% url 'admin:workflow_analytics' %}">Workflow Analytics Dashboard</a></td>
+            </tr>
+        </table>
+    </div>
+{% endblock %} 

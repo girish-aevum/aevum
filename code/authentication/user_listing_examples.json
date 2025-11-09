@@ -1,0 +1,177 @@
+{
+  "user_listing_api_examples": {
+    "description": "Examples for using the user listing endpoints in the authentication app",
+    "base_url": "http://localhost:8000/api/auth",
+    "authentication_required": "Admin privileges required (IsAuthenticated + IsAdminUser)",
+    
+    "endpoints": {
+      "list_users": {
+        "method": "GET",
+        "url": "/users/",
+        "description": "Get paginated list of all users (excludes superadmin)",
+        "examples": [
+          {
+            "name": "Basic user listing",
+            "url": "/users/",
+            "description": "Get first page of users with default pagination (20 per page)"
+          },
+          {
+            "name": "Custom page size",
+            "url": "/users/?page_size=10",
+            "description": "Get 10 users per page"
+          },
+          {
+            "name": "Specific page",
+            "url": "/users/?page=2",
+            "description": "Get second page of results"
+          },
+          {
+            "name": "Search users",
+            "url": "/users/?search=john",
+            "description": "Search users by username, email, first_name, or last_name"
+          },
+          {
+            "name": "Filter active users",
+            "url": "/users/?is_active=true",
+            "description": "Get only active users"
+          },
+          {
+            "name": "Filter staff users",
+            "url": "/users/?is_staff=true",
+            "description": "Get only staff users"
+          },
+          {
+            "name": "Date range filter",
+            "url": "/users/?date_joined_after=2024-01-01&date_joined_before=2024-12-31",
+            "description": "Get users who joined in 2024"
+          },
+          {
+            "name": "Combined filters",
+            "url": "/users/?is_active=true&search=smith&ordering=-date_joined&page_size=5",
+            "description": "Active users with 'smith' in name, ordered by newest first, 5 per page"
+          }
+        ]
+      },
+      
+      "get_user_details": {
+        "method": "GET",
+        "url": "/users/{user_id}/",
+        "description": "Get detailed information about a specific user",
+        "examples": [
+          {
+            "name": "Get user by ID",
+            "url": "/users/123/",
+            "description": "Get detailed information for user with ID 123"
+          }
+        ]
+      }
+    },
+    
+    "response_formats": {
+      "user_list_response": {
+        "pagination": {
+          "count": 25,
+          "total_pages": 3,
+          "current_page": 1,
+          "page_size": 10,
+          "has_next": true,
+          "has_previous": false,
+          "next_page": 2,
+          "previous_page": null
+        },
+        "results": [
+          {
+            "id": 2,
+            "username": "john_doe",
+            "email": "john@example.com",
+            "first_name": "John",
+            "last_name": "Doe",
+            "full_name": "John Doe",
+            "is_active": true,
+            "is_active_status": "Active",
+            "date_joined": "2024-01-15T10:30:00Z",
+            "date_joined_formatted": "2024-01-15 10:30",
+            "last_login": "2024-01-20T14:22:00Z",
+            "last_login_formatted": "2024-01-20 14:22",
+            "profile_image_url": "http://localhost:8000/media/profile_images/user_2_profile.jpg",
+            "profile_completion": 85.5
+          }
+        ]
+      },
+      
+      "user_detail_response": {
+        "id": 2,
+        "username": "john_doe",
+        "email": "john@example.com",
+        "first_name": "John",
+        "last_name": "Doe",
+        "full_name": "John Doe",
+        "is_active": true,
+        "is_active_status": "Active",
+        "is_staff": false,
+        "date_joined": "2024-01-15T10:30:00Z",
+        "date_joined_formatted": "2024-01-15 10:30",
+        "last_login": "2024-01-20T14:22:00Z",
+        "last_login_formatted": "2024-01-20 14:22",
+        "profile_image_url": "http://localhost:8000/media/profile_images/user_2_profile.jpg",
+        "profile_completion": 85.5,
+        "profile": {
+          "id": 2,
+          "date_of_birth": "1990-05-15",
+          "sex": "Male",
+          "gender_identity": "Male",
+          "blood_group": "O+",
+          "height_cm": 175.0,
+          "weight_kg": 70.5,
+          "phone_number": "+1234567890",
+          "address_line1": "123 Main St",
+          "city": "New York",
+          "state": "NY",
+          "country": "USA",
+          "postal_code": "10001",
+          "occupation": "Software Developer"
+        }
+      }
+    },
+    
+    "curl_examples": [
+      {
+        "name": "List users with admin token",
+        "command": "curl -X GET 'http://localhost:8000/api/auth/users/' -H 'Authorization: Bearer YOUR_ADMIN_JWT_TOKEN'",
+        "description": "Get list of users (requires admin privileges)"
+      },
+      {
+        "name": "Search and filter users",
+        "command": "curl -X GET 'http://localhost:8000/api/auth/users/?search=john&is_active=true&page_size=5' -H 'Authorization: Bearer YOUR_ADMIN_JWT_TOKEN'",
+        "description": "Search for active users containing 'john', 5 per page"
+      },
+      {
+        "name": "Get user details",
+        "command": "curl -X GET 'http://localhost:8000/api/auth/users/123/' -H 'Authorization: Bearer YOUR_ADMIN_JWT_TOKEN'",
+        "description": "Get detailed information for user ID 123"
+      }
+    ],
+    
+    "security_features": [
+      "Excludes superadmin users from listing for security",
+      "Requires admin privileges (IsAuthenticated + IsAdminUser)",
+      "No sensitive information like passwords in responses",
+      "Profile completion percentage calculation",
+      "Formatted date fields for better readability"
+    ],
+    
+    "filtering_options": {
+      "search": "Search across username, email, first_name, last_name",
+      "is_active": "Filter by user active status (true/false)",
+      "is_staff": "Filter by staff status (true/false)", 
+      "date_joined_after": "Users joined after this date (YYYY-MM-DD)",
+      "date_joined_before": "Users joined before this date (YYYY-MM-DD)",
+      "ordering": "Sort by username, email, date_joined, last_login, is_active (prefix with - for descending)"
+    },
+    
+    "pagination_parameters": {
+      "page": "Page number (default: 1)",
+      "page_size": "Items per page (default: 20, max: 100)"
+    }
+  }
+} 

@@ -1,0 +1,368 @@
+{
+  "subscription_api_examples": {
+    "description": "Complete examples for using the Aevum Health subscription system",
+    "base_url": "http://localhost:8000/api/auth/subscription",
+    
+    "public_endpoints": {
+      "description": "Endpoints accessible without authentication",
+      "list_subscription_plans": {
+        "method": "GET",
+        "url": "/plans/",
+        "description": "Get all available subscription plans",
+        "examples": [
+          {
+            "name": "Get all plans",
+            "curl": "curl -X GET 'http://localhost:8000/api/auth/subscription/plans/'",
+            "response": {
+              "pagination": {
+                "count": 8,
+                "total_pages": 1,
+                "current_page": 1,
+                "page_size": 10,
+                "has_next": false,
+                "has_previous": false
+              },
+              "results": [
+                {
+                  "id": 1,
+                  "name": "Free Plan",
+                  "plan_type": "FREE",
+                  "description": "Basic health tracking at no cost...",
+                  "price": "0.00",
+                  "billing_cycle": "MONTHLY",
+                  "monthly_price": 0.0,
+                  "is_free": true,
+                  "dna_kits_included": 0,
+                  "mood_entries_limit": 30,
+                  "ai_insights_enabled": false,
+                  "priority_support": false,
+                  "data_export_enabled": false,
+                  "api_access_enabled": false,
+                  "is_featured": false,
+                  "features": ["30 mood entries per month"]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      
+      "get_plan_details": {
+        "method": "GET",
+        "url": "/plans/{plan_id}/",
+        "description": "Get detailed information about a specific plan",
+        "examples": [
+          {
+            "name": "Get Premium plan details",
+            "curl": "curl -X GET 'http://localhost:8000/api/auth/subscription/plans/3/'",
+            "response": {
+              "id": 3,
+              "name": "Premium Wellness",
+              "plan_type": "PREMIUM",
+              "description": "Complete health optimization with advanced AI insights...",
+              "price": "79.99",
+              "billing_cycle": "MONTHLY",
+              "monthly_price": 79.99,
+              "is_free": false,
+              "dna_kits_included": 3,
+              "mood_entries_limit": 0,
+              "ai_insights_enabled": true,
+              "priority_support": true,
+              "data_export_enabled": true,
+              "api_access_enabled": true,
+              "is_featured": true,
+              "features": [
+                "3 DNA kits included",
+                "Unlimited mood entries",
+                "AI-powered insights",
+                "Priority customer support",
+                "Data export capabilities",
+                "API access"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    
+    "user_endpoints": {
+      "description": "Endpoints requiring user authentication",
+      "authentication": "Bearer JWT token required",
+      
+      "get_my_subscription": {
+        "method": "GET",
+        "url": "/my-subscription/",
+        "description": "Get current user's subscription details",
+        "examples": [
+          {
+            "name": "Get my subscription",
+            "curl": "curl -X GET 'http://localhost:8000/api/auth/subscription/my-subscription/' -H 'Authorization: Bearer YOUR_JWT_TOKEN'",
+            "response": {
+              "id": 1,
+              "plan": {
+                "id": 2,
+                "name": "Basic Health",
+                "plan_type": "BASIC",
+                "price": "29.99",
+                "billing_cycle": "MONTHLY",
+                "features": ["1 DNA kits included", "Unlimited mood entries", "AI-powered insights", "Data export capabilities"]
+              },
+              "status": "ACTIVE",
+              "status_display": "Active",
+              "start_date": "2024-01-15T10:30:00Z",
+              "end_date": "2024-02-15T10:30:00Z",
+              "next_billing_date": "2024-02-15T10:30:00Z",
+              "payment_method": "CREDIT_CARD",
+              "payment_method_display": "Credit Card",
+              "last_payment_date": "2024-01-15T10:30:00Z",
+              "last_payment_amount": "29.99",
+              "dna_kits_used": 0,
+              "mood_entries_this_month": 15,
+              "auto_renew": true,
+              "is_active": true,
+              "days_remaining": 25,
+              "usage_percentage": {
+                "dna_kits": 0.0,
+                "mood_entries": 0.0
+              }
+            }
+          }
+        ]
+      },
+      
+      "get_subscription_usage": {
+        "method": "GET",
+        "url": "/usage/",
+        "description": "Get detailed usage statistics for current subscription",
+        "examples": [
+          {
+            "name": "Get usage statistics",
+            "curl": "curl -X GET 'http://localhost:8000/api/auth/subscription/usage/' -H 'Authorization: Bearer YOUR_JWT_TOKEN'",
+            "response": {
+              "dna_kits_used": 0,
+              "dna_kits_limit": 1,
+              "dna_kits_remaining": 1,
+              "mood_entries_this_month": 15,
+              "mood_entries_limit": 0,
+              "mood_entries_remaining": -1,
+              "features_available": {
+                "dna_kits": true,
+                "mood_entries": true,
+                "ai_insights": true,
+                "priority_support": false,
+                "data_export": true,
+                "api_access": false
+              },
+              "usage_percentages": {
+                "dna_kits": 0.0,
+                "mood_entries": 0.0
+              }
+            }
+          }
+        ]
+      },
+      
+      "upgrade_subscription": {
+        "method": "POST",
+        "url": "/upgrade/",
+        "description": "Upgrade to a new subscription plan",
+        "examples": [
+          {
+            "name": "Upgrade to Premium plan",
+            "curl": "curl -X POST 'http://localhost:8000/api/auth/subscription/upgrade/' -H 'Authorization: Bearer YOUR_JWT_TOKEN' -H 'Content-Type: application/json' -d '{\"plan_id\": 3, \"payment_method\": \"CREDIT_CARD\"}'",
+            "payload": {
+              "plan_id": 3,
+              "payment_method": "CREDIT_CARD"
+            },
+            "response": {
+              "message": "Subscription upgraded successfully",
+              "subscription": {
+                "id": 1,
+                "plan": {
+                  "id": 3,
+                  "name": "Premium Wellness",
+                  "plan_type": "PREMIUM",
+                  "price": "79.99"
+                },
+                "status": "ACTIVE",
+                "is_active": true
+              }
+            }
+          }
+        ]
+      },
+      
+      "cancel_subscription": {
+        "method": "POST",
+        "url": "/cancel/",
+        "description": "Cancel current subscription",
+        "examples": [
+          {
+            "name": "Cancel subscription with reason",
+            "curl": "curl -X POST 'http://localhost:8000/api/auth/subscription/cancel/' -H 'Authorization: Bearer YOUR_JWT_TOKEN' -H 'Content-Type: application/json' -d '{\"reason\": \"No longer need the service\", \"immediate\": false}'",
+            "payload": {
+              "reason": "No longer need the service",
+              "immediate": false
+            },
+            "response": {
+              "message": "Subscription cancelled successfully",
+              "immediate": false,
+              "access_until": "2024-02-15T10:30:00Z"
+            }
+          }
+        ]
+      },
+      
+      "subscription_history": {
+        "method": "GET",
+        "url": "/history/",
+        "description": "Get subscription history and payment records",
+        "examples": [
+          {
+            "name": "Get subscription history",
+            "curl": "curl -X GET 'http://localhost:8000/api/auth/subscription/history/' -H 'Authorization: Bearer YOUR_JWT_TOKEN'",
+            "response": {
+              "pagination": {
+                "count": 3,
+                "total_pages": 1,
+                "current_page": 1,
+                "page_size": 20
+              },
+              "results": [
+                {
+                  "id": 3,
+                  "action_type": "UPGRADED",
+                  "action_type_display": "Plan Upgraded",
+                  "old_plan_name": "Basic Health",
+                  "new_plan_name": "Premium Wellness",
+                  "amount": "79.99",
+                  "notes": "Upgraded from Basic Health to Premium Wellness",
+                  "created_at": "2024-01-20T14:22:00Z"
+                },
+                {
+                  "id": 2,
+                  "action_type": "PAYMENT_SUCCESS",
+                  "action_type_display": "Payment Successful",
+                  "old_plan_name": null,
+                  "new_plan_name": null,
+                  "amount": "29.99",
+                  "notes": "Monthly payment processed",
+                  "created_at": "2024-01-15T10:30:00Z"
+                },
+                {
+                  "id": 1,
+                  "action_type": "CREATED",
+                  "action_type_display": "Subscription Created",
+                  "old_plan_name": null,
+                  "new_plan_name": "Basic Health",
+                  "amount": "29.99",
+                  "notes": "Created new subscription with Basic Health",
+                  "created_at": "2024-01-15T10:30:00Z"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    
+    "admin_endpoints": {
+      "description": "Admin-only endpoints requiring admin privileges",
+      "authentication": "Admin JWT token required",
+      
+      "list_all_subscriptions": {
+        "method": "GET",
+        "url": "/admin/subscriptions/",
+        "description": "Admin endpoint to list all user subscriptions",
+        "examples": [
+          {
+            "name": "List all subscriptions with filters",
+            "curl": "curl -X GET 'http://localhost:8000/api/auth/subscription/admin/subscriptions/?status=ACTIVE&plan_type=PREMIUM' -H 'Authorization: Bearer ADMIN_JWT_TOKEN'",
+            "query_parameters": {
+              "status": "Filter by subscription status (ACTIVE, EXPIRED, CANCELLED, etc.)",
+              "plan_type": "Filter by plan type (FREE, BASIC, PREMIUM, ENTERPRISE)",
+              "is_active": "Filter by active status (true/false)",
+              "search": "Search by username, email, or plan name",
+              "ordering": "Sort by created_at, start_date, end_date, status"
+            }
+          }
+        ]
+      },
+      
+      "manage_subscription_plans": {
+        "method": "GET/POST",
+        "url": "/admin/plans/",
+        "description": "Admin endpoint to view and create subscription plans",
+        "examples": [
+          {
+            "name": "Create new subscription plan",
+            "curl": "curl -X POST 'http://localhost:8000/api/auth/subscription/admin/plans/' -H 'Authorization: Bearer ADMIN_JWT_TOKEN' -H 'Content-Type: application/json' -d '{\"name\": \"Student Plan\", \"plan_type\": \"BASIC\", \"price\": \"19.99\", \"billing_cycle\": \"MONTHLY\", \"description\": \"Special pricing for students\"}'",
+            "payload": {
+              "name": "Student Plan",
+              "plan_type": "BASIC",
+              "description": "Special pricing for students and educators",
+              "price": "19.99",
+              "billing_cycle": "MONTHLY",
+              "dna_kits_included": 1,
+              "mood_entries_limit": 0,
+              "ai_insights_enabled": true,
+              "priority_support": false,
+              "data_export_enabled": true,
+              "api_access_enabled": false,
+              "is_active": true,
+              "is_featured": false
+            }
+          }
+        ]
+      }
+    },
+    
+    "feature_usage_examples": {
+      "description": "How to check if user can use specific features",
+      "check_dna_kit_usage": {
+        "description": "Before allowing DNA kit order, check if user has remaining kits",
+        "code_example": "user.subscription.can_use_feature('dna_kits')"
+      },
+      "check_mood_entries": {
+        "description": "Before saving mood entry, check monthly limit",
+        "code_example": "user.subscription.can_use_feature('mood_entries')"
+      },
+      "check_ai_insights": {
+        "description": "Before showing AI insights, verify feature access",
+        "code_example": "user.subscription.can_use_feature('ai_insights')"
+      }
+    },
+    
+    "webhook_examples": {
+      "description": "Payment webhook integration examples (for production)",
+      "stripe_webhook": {
+        "url": "/api/auth/subscription/webhooks/stripe/",
+        "description": "Handle Stripe payment events",
+        "events": [
+          "invoice.payment_succeeded",
+          "invoice.payment_failed",
+          "customer.subscription.updated",
+          "customer.subscription.deleted"
+        ]
+      },
+      "paypal_webhook": {
+        "url": "/api/auth/subscription/webhooks/paypal/",
+        "description": "Handle PayPal subscription events",
+        "events": [
+          "BILLING.SUBSCRIPTION.ACTIVATED",
+          "BILLING.SUBSCRIPTION.CANCELLED",
+          "PAYMENT.SALE.COMPLETED"
+        ]
+      }
+    },
+    
+    "integration_notes": {
+      "payment_processing": "In production, integrate with Stripe, PayPal, or other payment processors",
+      "feature_gates": "Use subscription.can_use_feature() throughout your application to enforce limits",
+      "usage_tracking": "Update usage counters when users consume resources (DNA kits, mood entries)",
+      "renewal_handling": "Set up cron jobs or background tasks to handle subscription renewals",
+      "email_notifications": "Send email notifications for subscription changes, payment failures, etc.",
+      "analytics": "Track subscription metrics for business intelligence and optimization"
+    }
+  }
+} 

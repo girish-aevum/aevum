@@ -1,0 +1,39 @@
+AEVUM HEALTH ADMIN - New Early Access Request
+
+🚨 NEW EARLY ACCESS REQUEST RECEIVED
+
+A new user has requested early access to the Aevum Health platform.
+
+REQUEST DETAILS:
+================
+Full Name: {{ request.full_name }}
+Email: {{ request.email }}
+Phone: {% if request.phone_number %}{{ request.phone_number }}{% else %}Not provided{% endif %}
+Interest: {{ request.get_interest_display_name }}
+Priority: {{ request.get_priority_display }}
+Status: {{ request.get_status_display }}
+Request ID: {{ request.request_id }}
+Submitted: {{ request.created_at|date:"M d, Y \a\t g:i A" }}
+{% if request.ip_address %}IP Address: {{ request.ip_address }}{% endif %}
+
+QUICK INFO:
+===========
+Interest Category: {{ request.get_interest_display_name }}
+Requires Follow-up: {% if request.phone_number %}Yes (Phone provided){% else %}Email only{% endif %}
+Time Since Request: Just now
+
+RECOMMENDED ACTIONS:
+===================
+• Review the request within 24 hours
+• Update priority if needed based on interest area  
+• Send personalized follow-up email if high priority
+• Add to appropriate early access group
+
+QUICK ACTIONS:
+==============
+Review in Admin: {{ admin_url }}
+Reply to User: mailto:{{ request.email }}?subject=Re: Your Early Access Request
+
+---
+This notification was sent automatically when a new early access request was submitted.
+Manage in Admin Dashboard: {{ admin_url }} 

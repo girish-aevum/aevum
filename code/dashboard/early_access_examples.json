@@ -1,0 +1,208 @@
+{
+  "early_access_request_examples": {
+    "create_early_access_request": {
+      "description": "Submit a new early access request",
+      "method": "POST",
+      "endpoint": "/api/dashboard/early-access/",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "email": "john.doe@example.com",
+        "full_name": "John Doe",
+        "phone_number": "+1234567890",
+        "primary_interest": "COMPREHENSIVE"
+      },
+      "expected_response": {
+        "message": "Thank you for your interest! We have received your early access request.",
+        "request_id": "550e8400-e29b-41d4-a716-446655440000",
+        "status": "success"
+      }
+    },
+    "list_early_access_requests_admin": {
+      "description": "List all early access requests (Admin only)",
+      "method": "GET",
+      "endpoint": "/api/dashboard/admin/early-access/",
+      "headers": {
+        "Authorization": "Bearer <admin_jwt_token>",
+        "Content-Type": "application/json"
+      },
+      "query_parameters": {
+        "status": "PENDING",
+        "priority": "HIGH",
+        "primary_interest": "DNA_ANALYSIS",
+        "search": "john",
+        "page": 1,
+        "page_size": 20
+      },
+      "expected_response": {
+        "pagination": {
+          "count": 45,
+          "total_pages": 3,
+          "current_page": 1,
+          "page_size": 20,
+          "has_next": true,
+          "has_previous": false,
+          "next_page": 2,
+          "previous_page": null
+        },
+        "results": [
+          {
+            "request_id": "550e8400-e29b-41d4-a716-446655440000",
+            "email": "john.doe@example.com",
+            "full_name": "John Doe",
+            "phone_number": "+1234567890",
+            "primary_interest": "COMPREHENSIVE",
+            "interest_display": "Complete Health Platform",
+            "status": "PENDING",
+            "status_display": "Pending Review",
+            "priority": "MEDIUM",
+            "priority_display": "Medium Priority",
+            "contacted_at": null,
+            "contacted_by_name": null,
+            "days_since_request": 2,
+            "created_at": "2024-09-11T10:30:00Z",
+            "updated_at": "2024-09-11T10:30:00Z"
+          }
+        ]
+      }
+    },
+    "get_early_access_request_detail": {
+      "description": "Get detailed information about a specific early access request",
+      "method": "GET",
+      "endpoint": "/api/dashboard/admin/early-access/550e8400-e29b-41d4-a716-446655440000/",
+      "headers": {
+        "Authorization": "Bearer <admin_jwt_token>",
+        "Content-Type": "application/json"
+      },
+      "expected_response": {
+        "request_id": "550e8400-e29b-41d4-a716-446655440000",
+        "email": "john.doe@example.com",
+        "full_name": "John Doe",
+        "phone_number": "+1234567890",
+        "primary_interest": "COMPREHENSIVE",
+        "interest_display": "Complete Health Platform",
+        "status": "PENDING",
+        "status_display": "Pending Review",
+        "priority": "MEDIUM",
+        "priority_display": "Medium Priority",
+        "source": "website",
+        "ip_address": "192.168.1.1",
+        "user_agent": "Mozilla/5.0...",
+        "contacted_at": null,
+        "contacted_by": null,
+        "contacted_by_name": null,
+        "admin_notes": "",
+        "created_at": "2024-09-11T10:30:00Z",
+        "updated_at": "2024-09-11T10:30:00Z"
+      }
+    },
+    "update_early_access_request": {
+      "description": "Update the status and tracking information of an early access request",
+      "method": "PATCH",
+      "endpoint": "/api/dashboard/admin/early-access/550e8400-e29b-41d4-a716-446655440000/",
+      "headers": {
+        "Authorization": "Bearer <admin_jwt_token>",
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "status": "CONTACTED",
+        "priority": "HIGH",
+        "contacted_at": "2024-09-11T14:30:00Z",
+        "contacted_by": 1,
+        "admin_notes": "Initial contact made via email. User very interested in DNA analysis features."
+      },
+      "expected_response": {
+        "request_id": "550e8400-e29b-41d4-a716-446655440000",
+        "email": "john.doe@example.com",
+        "full_name": "John Doe",
+        "phone_number": "+1234567890",
+        "primary_interest": "COMPREHENSIVE",
+        "interest_display": "Complete Health Platform",
+        "status": "CONTACTED",
+        "status_display": "Initial Contact Made",
+        "priority": "HIGH",
+        "priority_display": "High Priority",
+        "contacted_at": "2024-09-11T14:30:00Z",
+        "contacted_by_name": "Admin User",
+        "admin_notes": "Initial contact made via email. User very interested in DNA analysis features.",
+        "created_at": "2024-09-11T10:30:00Z",
+        "updated_at": "2024-09-11T14:35:00Z"
+      }
+    }
+  },
+  "interest_choices": [
+    {
+      "value": "DNA_ANALYSIS",
+      "display": "DNA Analysis & Genetic Insights"
+    },
+    {
+      "value": "MENTAL_WELLNESS",
+      "display": "Mental Wellness & Mood Tracking"
+    },
+    {
+      "value": "NUTRITION",
+      "display": "Nutrition & Dietary Planning"
+    },
+    {
+      "value": "FITNESS",
+      "display": "Fitness & Health Monitoring"
+    },
+    {
+      "value": "AI_COMPANION",
+      "display": "AI Health Companion"
+    },
+    {
+      "value": "COMPREHENSIVE",
+      "display": "Complete Health Platform"
+    },
+    {
+      "value": "OTHER",
+      "display": "Other"
+    }
+  ],
+  "status_choices": [
+    {
+      "value": "PENDING",
+      "display": "Pending Review"
+    },
+    {
+      "value": "CONTACTED",
+      "display": "Initial Contact Made"
+    },
+    {
+      "value": "INTERESTED",
+      "display": "Showed Interest"
+    },
+    {
+      "value": "ONBOARDED",
+      "display": "Successfully Onboarded"
+    },
+    {
+      "value": "NOT_INTERESTED",
+      "display": "Not Interested"
+    },
+    {
+      "value": "INVALID",
+      "display": "Invalid Request"
+    }
+  ],
+  "priority_choices": [
+    {
+      "value": "LOW",
+      "display": "Low Priority"
+    },
+    {
+      "value": "MEDIUM",
+      "display": "Medium Priority"
+    },
+    {
+      "value": "HIGH",
+      "display": "High Priority"
+    },
+    {
+      "value": "URGENT",
+      "display": "Urgent"
+    }
+  ]
+} 

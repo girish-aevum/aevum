@@ -1,0 +1,234 @@
+{
+  "pdf_upload_workflow": {
+    "description": "Complete workflow for uploading and processing DNA result PDFs",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Upload PDF",
+        "endpoint": "POST /api/dna-profile/pdf/upload/",
+        "description": "Upload a DNA result PDF file",
+        "payload": {
+          "kit_id": "AEVUM-A1B2C3D4",
+          "pdf_file": "<PDF_FILE_UPLOAD>"
+        },
+        "response_example": {
+          "upload_id": "12345678-1234-5678-9012-123456789012",
+          "kit_id": "AEVUM-A1B2C3D4",
+          "file_url": "http://localhost:8000/media/dna_results/pdfs/dna_result_AEVUM-A1B2C3D4_20231210_143022.pdf",
+          "original_filename": "my_dna_results.pdf",
+          "file_size": 2048576,
+          "status": "UPLOADED",
+          "uploaded_at": "2023-12-10T14:30:22Z"
+        }
+      },
+      {
+        "step": 2,
+        "action": "Check Processing Status",
+        "endpoint": "GET /api/dna-profile/pdf/uploads/{upload_id}/",
+        "description": "Monitor the PDF processing status",
+        "response_example": {
+          "upload_id": "12345678-1234-5678-9012-123456789012",
+          "status": "COMPLETED",
+          "extraction_confidence": 85.5,
+          "results_created_count": 0,
+          "processing_notes": "Successfully extracted text using pdfplumber\nFound 12 potential DNA traits",
+          "extracted_data": [
+            {
+              "id": 1,
+              "trait_name": "Type 2 Diabetes Risk",
+              "category": "HEALTH_RISK",
+              "result_value": "Slightly increased risk (1.3x average)",
+              "confidence_level": "HIGH",
+              "risk_score": 65.5,
+              "extraction_confidence": 88.0,
+              "is_processed": false
+            }
+          ]
+        }
+      },
+      {
+        "step": 3,
+        "action": "Review Extracted Data (Lab)",
+        "endpoint": "GET /api/dna-profile/lab/extracted-data/",
+        "description": "Lab staff reviews extracted data before processing",
+        "query_parameters": {
+          "upload_id": "12345678-1234-5678-9012-123456789012",
+          "is_processed": "false"
+        }
+      },
+      {
+        "step": 4,
+        "action": "Process Extracted Data (Lab)",
+        "endpoint": "POST /api/dna-profile/lab/process-extracted-data/",
+        "description": "Convert extracted data into DNA results",
+        "payload": {
+          "extracted_data_ids": [1, 2, 3],
+          "reviewed_by": "Dr. Jane Smith, MD"
+        },
+        "response_example": {
+          "message": "Successfully processed 3 extracted data items",
+          "created_results": [
+            {
+              "extracted_data_id": 1,
+              "dna_result_id": 45,
+              "trait_name": "Type 2 Diabetes Risk"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "api_endpoints": {
+    "user_endpoints": [
+      {
+        "method": "POST",
+        "url": "/api/dna-profile/pdf/upload/",
+        "description": "Upload DNA result PDF",
+        "authentication": "Required",
+        "content_type": "multipart/form-data",
+        "fields": {
+          "kit_id": "string (required) - DNA Kit ID",
+          "pdf_file": "file (required) - PDF file (max 50MB)"
+        }
+      },
+      {
+        "method": "GET",
+        "url": "/api/dna-profile/pdf/uploads/",
+        "description": "List user's PDF uploads",
+        "authentication": "Required",
+        "query_parameters": {
+          "ordering": "uploaded_at, -uploaded_at, status"
+        }
+      },
+      {
+        "method": "GET",
+        "url": "/api/dna-profile/pdf/uploads/{id}/",
+        "description": "Get PDF upload details with extracted data",
+        "authentication": "Required"
+      }
+    ],
+    "lab_endpoints": [
+      {
+        "method": "GET",
+        "url": "/api/dna-profile/lab/extracted-data/",
+        "description": "List extracted data from PDFs",
+        "authentication": "Required (Lab Staff)",
+        "query_parameters": {
+          "is_processed": "true/false - Filter by processing status",
+          "upload_id": "UUID - Filter by specific PDF upload",
+          "search": "Search in trait names and categories"
+        }
+      },
+      {
+        "method": "POST",
+        "url": "/api/dna-profile/lab/process-extracted-data/",
+        "description": "Process extracted data into DNA results",
+        "authentication": "Required (Lab Staff)",
+        "payload": {
+          "extracted_data_ids": [1, 2, 3],
+          "reviewed_by": "Dr. Name (optional)"
+        }
+      }
+    ]
+  },
+  "pdf_processing_features": {
+    "supported_formats": ["PDF"],
+    "max_file_size": "50MB",
+    "extraction_methods": [
+      "pdfplumber (primary)",
+      "PyPDF2 (fallback)",
+      "OCR with pytesseract (last resort)"
+    ],
+    "extracted_data_types": [
+      "Trait names (Type 2 Diabetes, Heart Disease, etc.)",
+      "Risk values (percentages, fold changes)",
+      "Confidence levels (High, Medium, Low)",
+      "Genetic markers (rs numbers, gene names)",
+      "Risk scores (0-100 scale)",
+      "Recommendations and methodology"
+    ],
+    "categories_detected": [
+      "HEALTH_RISK - Disease predispositions",
+      "ANCESTRY - Ethnic background",
+      "FITNESS - Exercise and nutrition",
+      "PHARMACOGENOMICS - Drug responses",
+      "CARRIER_STATUS - Recessive conditions",
+      "TRAITS - Physical characteristics"
+    ]
+  },
+  "processing_statuses": {
+    "UPLOADED": "PDF uploaded, waiting for processing",
+    "PROCESSING": "Extracting data from PDF",
+    "COMPLETED": "Processing complete, data extracted",
+    "FAILED": "Processing failed due to error",
+    "MANUAL_REVIEW": "Requires manual review"
+  },
+  "validation_rules": {
+    "pdf_file": {
+      "required": true,
+      "max_size": "50MB",
+      "allowed_extensions": [".pdf"],
+      "validation_errors": [
+        "Only PDF files are allowed",
+        "PDF file size cannot exceed 50MB"
+      ]
+    },
+    "kit_id": {
+      "required": true,
+      "validation": "Must be a valid DNA kit ID that exists",
+      "permission": "User must own the kit or be lab staff",
+      "validation_errors": [
+        "DNA Kit with ID 'XXX' does not exist",
+        "You don't have permission to upload files for this kit"
+      ]
+    }
+  },
+  "example_extracted_data": [
+    {
+      "trait_name": "Type 2 Diabetes Risk",
+      "category": "HEALTH_RISK",
+      "subcategory": "Metabolic",
+      "result_value": "Increased risk (1.4x average population)",
+      "confidence_level": "HIGH",
+      "risk_score": 68.5,
+      "genetic_markers": ["rs7903146", "rs12255372"],
+      "methodology": "Polygenic Risk Score",
+      "recommendations": "Maintain healthy diet, regular exercise, annual glucose screening",
+      "extraction_confidence": 92.5,
+      "page_number": 2
+    },
+    {
+      "trait_name": "European Ancestry",
+      "category": "ANCESTRY",
+      "subcategory": "Ethnicity",
+      "result_value": "85% European (45% Northern, 40% Southern)",
+      "confidence_level": "HIGH",
+      "genetic_markers": ["rs12345", "rs67890"],
+      "methodology": "SNP Array Analysis",
+      "extraction_confidence": 95.0,
+      "page_number": 5
+    }
+  ],
+  "integration_notes": {
+    "background_processing": "Currently synchronous, should use Celery in production",
+    "file_storage": "Files stored in media/dna_results/pdfs/",
+    "security": "Files are validated and access-controlled",
+    "scalability": "Consider cloud storage (AWS S3) for production",
+    "monitoring": "Processing status and confidence scores tracked",
+    "error_handling": "Graceful fallback between extraction methods"
+  },
+  "curl_examples": {
+    "upload_pdf": {
+      "command": "curl -X POST http://localhost:8000/api/dna-profile/pdf/upload/ -H 'Authorization: Bearer YOUR_JWT_TOKEN' -F 'kit_id=AEVUM-A1B2C3D4' -F 'pdf_file=@/path/to/dna_results.pdf'",
+      "description": "Upload a DNA result PDF"
+    },
+    "check_status": {
+      "command": "curl -X GET http://localhost:8000/api/dna-profile/pdf/uploads/123/ -H 'Authorization: Bearer YOUR_JWT_TOKEN'",
+      "description": "Check processing status"
+    },
+    "process_data": {
+      "command": "curl -X POST http://localhost:8000/api/dna-profile/lab/process-extracted-data/ -H 'Authorization: Bearer YOUR_JWT_TOKEN' -H 'Content-Type: application/json' -d '{\"extracted_data_ids\": [1,2,3], \"reviewed_by\": \"Dr. Smith\"}'",
+      "description": "Process extracted data (lab use)"
+    }
+  }
+} 

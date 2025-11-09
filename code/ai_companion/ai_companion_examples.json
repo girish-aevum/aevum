@@ -1,0 +1,351 @@
+{
+  "ai_companion_examples": {
+    "chat_with_ai": {
+      "description": "Send a message to the AI companion and get intelligent response",
+      "method": "POST",
+      "endpoint": "/api/ai-companion/chat/",
+      "headers": {
+        "Authorization": "Bearer <jwt_token>",
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "message": "I've been feeling stressed lately and my sleep has been poor. Can you help me understand what might be causing this and suggest some solutions?",
+        "conversation_type": "MENTAL_WELLNESS",
+        "ai_personality_id": 1
+      },
+      "expected_response": {
+        "conversation_id": "550e8400-e29b-41d4-a716-446655440000",
+        "message_id": "550e8400-e29b-41d4-a716-446655440001",
+        "ai_response": "I understand you're dealing with stress and sleep issues, and I'm here to help you work through this. Stress and poor sleep often create a cycle - stress can make it harder to fall asleep, and lack of sleep can increase stress levels...",
+        "ai_personality": {
+          "id": 1,
+          "name": "Aevum Health Assistant",
+          "personality_type": "FRIENDLY",
+          "avatar_emoji": "😊",
+          "color_theme": "#6366f1"
+        },
+        "processing_time_ms": 1250,
+        "token_count": 245,
+        "confidence_score": 0.85,
+        "conversation_title": "Stress and Sleep Issues",
+        "message_count": 2
+      }
+    },
+    "new_conversation": {
+      "description": "Start a new conversation with specific AI personality",
+      "method": "POST",
+      "endpoint": "/api/ai-companion/conversations/",
+      "headers": {
+        "Authorization": "Bearer <jwt_token>",
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "title": "Health Goal Planning",
+        "conversation_type": "GOAL_SETTING",
+        "ai_personality": 3
+      },
+      "expected_response": {
+        "conversation_id": "550e8400-e29b-41d4-a716-446655440002",
+        "title": "Health Goal Planning",
+        "conversation_type": "GOAL_SETTING",
+        "ai_personality": {
+          "id": 3,
+          "name": "Coach Vitality",
+          "personality_type": "MOTIVATIONAL",
+          "avatar_emoji": "💪"
+        },
+        "status": "ACTIVE",
+        "message_count": 1,
+        "started_at": "2024-09-13T10:30:00Z"
+      }
+    },
+    "list_conversations": {
+      "description": "List user's AI conversations",
+      "method": "GET",
+      "endpoint": "/api/ai-companion/conversations/",
+      "headers": {
+        "Authorization": "Bearer <jwt_token>"
+      },
+      "query_parameters": {
+        "conversation_type": "MENTAL_WELLNESS",
+        "status": "ACTIVE",
+        "search": "stress",
+        "page": 1,
+        "page_size": 20
+      },
+      "expected_response": {
+        "pagination": {
+          "count": 5,
+          "total_pages": 1,
+          "current_page": 1,
+          "page_size": 20,
+          "has_next": false,
+          "has_previous": false
+        },
+        "results": [
+          {
+            "conversation_id": "550e8400-e29b-41d4-a716-446655440000",
+            "title": "Stress and Sleep Issues",
+            "conversation_type": "MENTAL_WELLNESS",
+            "conversation_type_display": "Mental Wellness Support",
+            "status": "ACTIVE",
+            "status_display": "Active",
+            "ai_personality_name": "Aevum Health Assistant",
+            "message_count": 8,
+            "last_message_preview": "I understand you're dealing with stress and sleep issues, and I'm here to help you work through this...",
+            "time_since_last_activity": "2 hours ago",
+            "user_satisfaction_rating": 5,
+            "started_at": "2024-09-13T08:00:00Z",
+            "last_activity_at": "2024-09-13T10:30:00Z"
+          }
+        ]
+      }
+    },
+    "get_conversation_detail": {
+      "description": "Get detailed conversation with all messages",
+      "method": "GET",
+      "endpoint": "/api/ai-companion/conversations/550e8400-e29b-41d4-a716-446655440000/",
+      "headers": {
+        "Authorization": "Bearer <jwt_token>"
+      },
+      "expected_response": {
+        "conversation_id": "550e8400-e29b-41d4-a716-446655440000",
+        "title": "Stress and Sleep Issues",
+        "conversation_type": "MENTAL_WELLNESS",
+        "conversation_type_display": "Mental Wellness Support",
+        "status": "ACTIVE",
+        "status_display": "Active",
+        "ai_personality": {
+          "id": 1,
+          "name": "Aevum Health Assistant",
+          "personality_type": "FRIENDLY",
+          "description": "A warm, friendly health companion...",
+          "avatar_emoji": "😊",
+          "color_theme": "#6366f1"
+        },
+        "message_count": 8,
+        "user_satisfaction_rating": 5,
+        "messages": [
+          {
+            "message_id": "550e8400-e29b-41d4-a716-446655440001",
+            "sender": "USER",
+            "sender_display": "User",
+            "message_type": "TEXT",
+            "content": "I've been feeling stressed lately and my sleep has been poor. Can you help me understand what might be causing this?",
+            "time_ago": "2 hours ago",
+            "created_at": "2024-09-13T08:30:00Z"
+          },
+          {
+            "message_id": "550e8400-e29b-41d4-a716-446655440002",
+            "sender": "AI",
+            "sender_display": "AI Companion",
+            "message_type": "TEXT",
+            "content": "I understand you're dealing with stress and sleep issues, and I'm here to help you work through this. Stress and poor sleep often create a cycle...",
+            "ai_model_used": "llama3-70b-8192",
+            "processing_time_ms": 1250,
+            "token_count": 245,
+            "confidence_score": 0.85,
+            "is_helpful": true,
+            "time_ago": "2 hours ago",
+            "created_at": "2024-09-13T08:31:00Z"
+          }
+        ],
+        "started_at": "2024-09-13T08:00:00Z",
+        "last_activity_at": "2024-09-13T10:30:00Z"
+      }
+    },
+    "health_insights": {
+      "description": "Get AI-powered health insights based on user data",
+      "method": "POST",
+      "endpoint": "/api/ai-companion/insights/",
+      "headers": {
+        "Authorization": "Bearer <jwt_token>",
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "question": "Based on my recent mood and energy levels, what patterns do you notice and what recommendations do you have?",
+        "include_mood_data": true,
+        "include_dna_data": false,
+        "include_journal_data": false
+      },
+      "expected_response": {
+        "insights": "Based on your recent mood and energy data, I notice several interesting patterns. Your mood ratings have been consistently higher on days when you report better sleep quality...",
+        "data_sources_used": ["User Profile", "Mental Wellness Data"],
+        "confidence_score": 0.78,
+        "recommendations": [
+          "Establish a consistent sleep schedule",
+          "Practice stress reduction techniques",
+          "Consider mindfulness meditation"
+        ],
+        "processing_time_ms": 1800
+      }
+    },
+    "health_summary": {
+      "description": "Get comprehensive AI-generated health summary",
+      "method": "GET",
+      "endpoint": "/api/ai-companion/health-summary/",
+      "headers": {
+        "Authorization": "Bearer <jwt_token>"
+      },
+      "expected_response": {
+        "health_summary": "Based on your health profile and recent data, here's your comprehensive health summary: You're making good progress in several areas of your wellness journey...",
+        "generated_at": "2024-09-13T10:30:00Z",
+        "processing_time_ms": 2100,
+        "model_used": "llama3-70b-8192"
+      }
+    },
+    "list_personalities": {
+      "description": "List available AI personalities",
+      "method": "GET",
+      "endpoint": "/api/ai-companion/personalities/",
+      "headers": {
+        "Authorization": "Bearer <jwt_token>"
+      },
+      "expected_response": [
+        {
+          "id": 1,
+          "name": "Aevum Health Assistant",
+          "personality_type": "FRIENDLY",
+          "personality_type_display": "Friendly & Supportive",
+          "description": "A warm, friendly health companion that provides supportive guidance and encouragement for your wellness journey.",
+          "avatar_emoji": "😊",
+          "color_theme": "#6366f1",
+          "greeting_message": "Hello! I'm Aevum, your personal health companion...",
+          "is_active": true,
+          "is_default": true
+        },
+        {
+          "id": 2,
+          "name": "Dr. Wellness",
+          "personality_type": "PROFESSIONAL",
+          "personality_type_display": "Professional Medical",
+          "description": "A professional medical AI that provides evidence-based health information with clinical expertise.",
+          "avatar_emoji": "👨‍⚕️",
+          "color_theme": "#059669",
+          "greeting_message": "Good day! I'm Dr. Wellness, your professional health advisor...",
+          "is_active": true,
+          "is_default": false
+        }
+      ]
+    },
+    "user_context": {
+      "description": "Get or update user's AI context and preferences",
+      "method": "GET",
+      "endpoint": "/api/ai-companion/context/",
+      "headers": {
+        "Authorization": "Bearer <jwt_token>"
+      },
+      "expected_response": {
+        "preferred_personality": 1,
+        "preferred_personality_name": "Aevum Health Assistant",
+        "health_goals": [
+          "Improve sleep quality",
+          "Reduce stress levels",
+          "Exercise regularly"
+        ],
+        "health_conditions": [
+          "Mild anxiety",
+          "Occasional insomnia"
+        ],
+        "medications": [],
+        "allergies": ["Peanuts"],
+        "communication_style": "CONVERSATIONAL",
+        "communication_style_display": "Conversational Style",
+        "allow_health_data_access": true,
+        "allow_dna_data_access": false,
+        "allow_mood_data_access": true,
+        "allow_journal_data_access": false,
+        "total_conversations": 12,
+        "total_messages": 89,
+        "average_satisfaction": 4.3,
+        "created_at": "2024-09-01T10:00:00Z",
+        "updated_at": "2024-09-13T10:30:00Z"
+      }
+    },
+    "conversation_feedback": {
+      "description": "Submit feedback for a conversation",
+      "method": "POST",
+      "endpoint": "/api/ai-companion/conversations/550e8400-e29b-41d4-a716-446655440000/feedback/",
+      "headers": {
+        "Authorization": "Bearer <jwt_token>",
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "feedback_type": "HELPFUL",
+        "rating": 5,
+        "comment": "The AI provided excellent advice about stress management and sleep hygiene. Very helpful and supportive."
+      },
+      "expected_response": {
+        "id": 1,
+        "feedback_type": "HELPFUL",
+        "feedback_type_display": "Helpful Response",
+        "rating": 5,
+        "comment": "The AI provided excellent advice about stress management and sleep hygiene. Very helpful and supportive.",
+        "created_at": "2024-09-13T10:30:00Z"
+      }
+    },
+    "ai_statistics": {
+      "description": "Get AI companion usage statistics",
+      "method": "GET",
+      "endpoint": "/api/ai-companion/stats/",
+      "headers": {
+        "Authorization": "Bearer <jwt_token>"
+      },
+      "expected_response": {
+        "total_conversations": 12,
+        "total_messages": 89,
+        "average_satisfaction": 4.3,
+        "most_used_personality": "Aevum Health Assistant",
+        "most_common_topics": ["General Health", "Wellness Tips", "Lifestyle Advice"],
+        "conversation_types": {
+          "GENERAL": 5,
+          "MENTAL_WELLNESS": 3,
+          "HEALTH_CONSULTATION": 2,
+          "GOAL_SETTING": 2
+        },
+        "recent_activity": [
+          {
+            "conversation_id": "550e8400-e29b-41d4-a716-446655440000",
+            "title": "Stress and Sleep Issues",
+            "type": "Mental Wellness Support",
+            "message_count": 8,
+            "last_activity": "2024-09-13T10:30:00Z",
+            "status": "Active"
+          }
+        ]
+      }
+    }
+  },
+  "conversation_types": [
+    {"value": "GENERAL", "display": "General Health Chat"},
+    {"value": "HEALTH_CONSULTATION", "display": "Health Consultation"},
+    {"value": "MENTAL_WELLNESS", "display": "Mental Wellness Support"},
+    {"value": "NUTRITION_ADVICE", "display": "Nutrition Guidance"},
+    {"value": "DNA_INSIGHTS", "display": "DNA Analysis Discussion"},
+    {"value": "GOAL_SETTING", "display": "Health Goal Setting"},
+    {"value": "SYMPTOM_ANALYSIS", "display": "Symptom Discussion"},
+    {"value": "MEDICATION_HELP", "display": "Medication Assistance"},
+    {"value": "LIFESTYLE_COACHING", "display": "Lifestyle Coaching"},
+    {"value": "EMERGENCY_SUPPORT", "display": "Emergency Support"}
+  ],
+  "personality_types": [
+    {"value": "FRIENDLY", "display": "Friendly & Supportive"},
+    {"value": "PROFESSIONAL", "display": "Professional Medical"},
+    {"value": "MOTIVATIONAL", "display": "Motivational Coach"},
+    {"value": "EMPATHETIC", "display": "Empathetic Listener"},
+    {"value": "ANALYTICAL", "display": "Data-Driven Analyst"},
+    {"value": "CASUAL", "display": "Casual Friend"}
+  ],
+  "sample_health_questions": [
+    "I've been feeling tired lately, what could be causing this?",
+    "Can you help me create a healthy morning routine?",
+    "What are some effective stress management techniques?",
+    "How can I improve my sleep quality?",
+    "What should I know about my recent mood patterns?",
+    "Can you analyze my health data and give me insights?",
+    "What are some healthy meal ideas for busy days?",
+    "How can I stay motivated to exercise regularly?",
+    "What preventive health measures should I consider?",
+    "Can you help me understand my DNA health insights?"
+  ]
+} 

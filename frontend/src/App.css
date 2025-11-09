@@ -1,0 +1,3 @@
+/* Using Tailwind for styles; keep minimal resets */
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }

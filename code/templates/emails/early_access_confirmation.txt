@@ -1,0 +1,39 @@
+AEVUM HEALTH - Thank you for your interest!
+
+Dear {{ user_name }},
+
+Thank you for your interest in joining the Aevum Health platform! We're thrilled that you want to be part of our personalized health journey.
+
+YOUR REQUEST DETAILS:
+Request ID: {{ request_id }}
+Primary Interest: {{ interest }}
+Status: Pending Review
+
+✨ YOU'RE ON THE LIST!
+We'll notify you as soon as early access becomes available.
+
+WHAT HAPPENS NEXT?
+1. Review: Our team will review your request within 24-48 hours
+2. Priority Access: You'll be among the first to receive access based on your interests
+3. Notification: We'll email you with your access credentials and getting started guide
+4. Onboarding: Our team will help you set up your personalized health profile
+
+WHAT MAKES AEVUM HEALTH SPECIAL?
+• DNA Analysis: Comprehensive genetic insights for personalized health
+• Mental Wellness: Advanced mood tracking with AI-powered insights
+• AI Companion: Your personal health assistant available 24/7
+• Holistic Approach: Nutrition, fitness, and wellness all in one platform
+
+If you have any questions or want to learn more about our platform, feel free to reach out to us at {{ support_email }}.
+
+Thank you for choosing Aevum Health for your wellness journey!
+
+Best regards,
+The Aevum Health Team
+
+---
+This email was sent because you requested early access to Aevum Health.
+Visit our website: https://www.aevum.co.in
+Contact Support: {{ support_email }}
+
+© 2024 Aevum Health. All rights reserved. 

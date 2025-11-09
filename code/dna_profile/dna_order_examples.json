@@ -1,0 +1,162 @@
+{
+  "valid_order_examples": [
+    {
+      "name": "Complete US Order",
+      "data": {
+        "kit_type": 1,
+        "quantity": 1,
+        "shipping_method": "STANDARD",
+        "shipping_address": {
+          "street": "123 Main Street, Apt 4B",
+          "city": "San Francisco",
+          "state": "CA",
+          "zip_code": "94105",
+          "country": "USA"
+        },
+        "special_instructions": "Please leave at front door if no answer"
+      }
+    },
+    {
+      "name": "International Order",
+      "data": {
+        "kit_type": 2,
+        "quantity": 1,
+        "shipping_method": "EXPRESS",
+        "shipping_address": {
+          "street": "456 Queen Street West, Unit 12",
+          "city": "Toronto",
+          "state": "Ontario",
+          "zip_code": "M5V 2A9",
+          "country": "Canada"
+        }
+      }
+    },
+    {
+      "name": "Minimal Required Fields",
+      "data": {
+        "kit_type": 3,
+        "shipping_address": {
+          "street": "789 Oak Avenue",
+          "city": "Austin",
+          "state": "TX",
+          "zip_code": "73301",
+          "country": "USA"
+        }
+      }
+    },
+    {
+      "name": "Multiple Kits with Express Shipping",
+      "data": {
+        "kit_type": 4,
+        "quantity": 2,
+        "shipping_method": "OVERNIGHT",
+        "shipping_address": {
+          "street": "321 Business Blvd, Suite 100",
+          "city": "New York",
+          "state": "NY",
+          "zip_code": "10001",
+          "country": "USA"
+        },
+        "special_instructions": "Deliver to reception desk during business hours (9AM-5PM)"
+      }
+    }
+  ],
+  "invalid_examples": [
+    {
+      "name": "Missing Street Address",
+      "data": {
+        "kit_type": 1,
+        "shipping_address": {
+          "city": "San Francisco",
+          "state": "CA",
+          "zip_code": "94105",
+          "country": "USA"
+        }
+      },
+      "error": "Shipping address is missing: Street address"
+    },
+    {
+      "name": "Missing Multiple Fields",
+      "data": {
+        "kit_type": 1,
+        "shipping_address": {
+          "street": "123 Main Street"
+        }
+      },
+      "error": "Shipping address is missing: City, State/Province, ZIP/Postal code, Country"
+    },
+    {
+      "name": "Empty String Values",
+      "data": {
+        "kit_type": 1,
+        "shipping_address": {
+          "street": "",
+          "city": "San Francisco",
+          "state": "CA",
+          "zip_code": "94105",
+          "country": "USA"
+        }
+      },
+      "error": "Shipping address is missing: Street address"
+    }
+  ],
+  "field_requirements": {
+    "required_fields": {
+      "street": {
+        "description": "Street address including apartment/unit number",
+        "max_length": 200,
+        "examples": [
+          "123 Main Street",
+          "456 Oak Ave, Apt 4B",
+          "789 Business Blvd, Suite 100"
+        ]
+      },
+      "city": {
+        "description": "City name",
+        "max_length": 100,
+        "examples": ["San Francisco", "Toronto", "Austin"]
+      },
+      "state": {
+        "description": "State, province, or region",
+        "max_length": 100,
+        "examples": ["CA", "California", "Ontario", "TX"]
+      },
+      "zip_code": {
+        "description": "ZIP code, postal code, or equivalent",
+        "max_length": 20,
+        "examples": ["94105", "M5V 2A9", "73301", "10001"]
+      },
+      "country": {
+        "description": "Country name",
+        "max_length": 100,
+        "examples": ["USA", "Canada", "United States", "United Kingdom"]
+      }
+    },
+    "optional_fields": {
+      "quantity": {
+        "description": "Number of kits to order",
+        "default": 1,
+        "type": "positive_integer"
+      },
+      "shipping_method": {
+        "description": "Shipping speed preference",
+        "default": "STANDARD",
+        "choices": ["STANDARD", "EXPRESS", "OVERNIGHT"],
+        "costs": {
+          "STANDARD": "$0.00",
+          "EXPRESS": "$15.00", 
+          "OVERNIGHT": "$35.00"
+        }
+      },
+      "special_instructions": {
+        "description": "Delivery instructions for the carrier",
+        "max_length": 500,
+        "examples": [
+          "Leave at front door",
+          "Deliver to reception desk",
+          "Ring doorbell twice"
+        ]
+      }
+    }
+  }
+} 

@@ -1,0 +1,329 @@
+{
+  "contact_message_examples": {
+    "create_contact_message": {
+      "description": "Submit a new contact message",
+      "method": "POST",
+      "endpoint": "/api/dashboard/contact/",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "full_name": "Jane Smith",
+        "email": "jane.smith@example.com",
+        "subject": "Question about DNA analysis features",
+        "message": "Hi, I'm interested in learning more about the DNA analysis capabilities of your platform. Can you provide more details about what types of genetic insights are available?"
+      },
+      "expected_response": {
+        "message": "Thank you for contacting us! We will respond to your message soon.",
+        "message_id": "550e8400-e29b-41d4-a716-446655440001",
+        "status": "success"
+      }
+    },
+    "list_contact_messages_admin": {
+      "description": "List all contact messages (Admin only)",
+      "method": "GET",
+      "endpoint": "/api/dashboard/admin/contact-messages/",
+      "headers": {
+        "Authorization": "Bearer <admin_jwt_token>",
+        "Content-Type": "application/json"
+      },
+      "query_parameters": {
+        "status": "NEW",
+        "priority": "HIGH",
+        "category": "SUPPORT",
+        "search": "jane",
+        "page": 1,
+        "page_size": 20
+      },
+      "expected_response": {
+        "pagination": {
+          "count": 32,
+          "total_pages": 2,
+          "current_page": 1,
+          "page_size": 20,
+          "has_next": true,
+          "has_previous": false,
+          "next_page": 2,
+          "previous_page": null
+        },
+        "results": [
+          {
+            "message_id": "550e8400-e29b-41d4-a716-446655440001",
+            "full_name": "Jane Smith",
+            "email": "jane.smith@example.com",
+            "subject": "Question about DNA analysis features",
+            "message_preview": "Hi, I'm interested in learning more about the DNA analysis capabilities of your platform. Can you provide more details...",
+            "category": "GENERAL",
+            "category_display": "General Inquiry",
+            "status": "NEW",
+            "status_display": "New Message",
+            "priority": "MEDIUM",
+            "priority_display": "Medium Priority",
+            "assigned_to_name": null,
+            "first_read_at": null,
+            "responded_at": null,
+            "days_since_message": 1,
+            "created_at": "2024-09-11T15:30:00Z",
+            "updated_at": "2024-09-11T15:30:00Z"
+          }
+        ]
+      }
+    },
+    "get_contact_message_detail": {
+      "description": "Get detailed information about a specific contact message",
+      "method": "GET",
+      "endpoint": "/api/dashboard/admin/contact-messages/550e8400-e29b-41d4-a716-446655440001/",
+      "headers": {
+        "Authorization": "Bearer <admin_jwt_token>",
+        "Content-Type": "application/json"
+      },
+      "expected_response": {
+        "message_id": "550e8400-e29b-41d4-a716-446655440001",
+        "full_name": "Jane Smith",
+        "email": "jane.smith@example.com",
+        "subject": "Question about DNA analysis features",
+        "message": "Hi, I'm interested in learning more about the DNA analysis capabilities of your platform. Can you provide more details about what types of genetic insights are available?",
+        "category": "GENERAL",
+        "category_display": "General Inquiry",
+        "status": "READ",
+        "status_display": "Message Read",
+        "priority": "MEDIUM",
+        "priority_display": "Medium Priority",
+        "ip_address": "192.168.1.2",
+        "user_agent": "Mozilla/5.0...",
+        "referrer": "https://aevum.co.in/contact",
+        "assigned_to": null,
+        "assigned_to_name": null,
+        "first_read_at": "2024-09-11T16:00:00Z",
+        "first_read_by": 1,
+        "first_read_by_name": "Admin User",
+        "responded_at": null,
+        "responded_by": null,
+        "responded_by_name": null,
+        "admin_notes": "",
+        "response_sent": "",
+        "created_at": "2024-09-11T15:30:00Z",
+        "updated_at": "2024-09-11T16:00:00Z"
+      }
+    },
+    "update_contact_message": {
+      "description": "Update the status and tracking information of a contact message",
+      "method": "PATCH",
+      "endpoint": "/api/dashboard/admin/contact-messages/550e8400-e29b-41d4-a716-446655440001/",
+      "headers": {
+        "Authorization": "Bearer <admin_jwt_token>",
+        "Content-Type": "application/json"
+      },
+      "payload": {
+        "category": "SUPPORT",
+        "status": "RESPONDED",
+        "priority": "HIGH",
+        "assigned_to": 1,
+        "admin_notes": "Provided detailed information about DNA analysis features. User seems very interested.",
+        "response_sent": "Thank you for your inquiry! Our DNA analysis platform provides comprehensive genetic insights including ancestry, health predispositions, and personalized recommendations..."
+      },
+      "expected_response": {
+        "message_id": "550e8400-e29b-41d4-a716-446655440001",
+        "full_name": "Jane Smith",
+        "email": "jane.smith@example.com",
+        "subject": "Question about DNA analysis features",
+        "message": "Hi, I'm interested in learning more about the DNA analysis capabilities of your platform. Can you provide more details about what types of genetic insights are available?",
+        "category": "SUPPORT",
+        "category_display": "Technical Support",
+        "status": "RESPONDED",
+        "status_display": "Response Sent",
+        "priority": "HIGH",
+        "priority_display": "High Priority",
+        "assigned_to": 1,
+        "assigned_to_name": "Admin User",
+        "admin_notes": "Provided detailed information about DNA analysis features. User seems very interested.",
+        "response_sent": "Thank you for your inquiry! Our DNA analysis platform provides comprehensive genetic insights including ancestry, health predispositions, and personalized recommendations...",
+        "created_at": "2024-09-11T15:30:00Z",
+        "updated_at": "2024-09-11T16:30:00Z"
+      }
+    },
+    "dashboard_statistics": {
+      "description": "Get comprehensive dashboard statistics",
+      "method": "GET",
+      "endpoint": "/api/dashboard/admin/stats/",
+      "headers": {
+        "Authorization": "Bearer <admin_jwt_token>",
+        "Content-Type": "application/json"
+      },
+      "expected_response": {
+        "early_access_requests": {
+          "total": 156,
+          "today": 8,
+          "this_week": 23,
+          "this_month": 67,
+          "by_status": {
+            "PENDING": 45,
+            "CONTACTED": 32,
+            "INTERESTED": 28,
+            "ONBOARDED": 15,
+            "NOT_INTERESTED": 12,
+            "INVALID": 4
+          },
+          "by_interest": {
+            "DNA_ANALYSIS": 45,
+            "MENTAL_WELLNESS": 32,
+            "COMPREHENSIVE": 28,
+            "NUTRITION": 22,
+            "FITNESS": 18,
+            "AI_COMPANION": 11
+          },
+          "pending_count": 45,
+          "high_priority_count": 12
+        },
+        "contact_messages": {
+          "total": 89,
+          "today": 5,
+          "this_week": 18,
+          "this_month": 42,
+          "by_status": {
+            "NEW": 15,
+            "READ": 12,
+            "IN_PROGRESS": 8,
+            "RESPONDED": 35,
+            "RESOLVED": 18,
+            "CLOSED": 1
+          },
+          "by_category": {
+            "GENERAL": 35,
+            "SUPPORT": 25,
+            "BILLING": 12,
+            "FEATURE": 8,
+            "PARTNERSHIP": 5,
+            "BUG": 3,
+            "MEDIA": 1
+          },
+          "unread_count": 15,
+          "urgent_count": 3
+        },
+        "recent_activity": [
+          {
+            "type": "contact_message",
+            "id": "550e8400-e29b-41d4-a716-446655440001",
+            "title": "Contact Message from Jane Smith",
+            "description": "Question about DNA analysis features",
+            "created_at": "2024-09-11T15:30:00Z",
+            "status": "NEW"
+          },
+          {
+            "type": "early_access",
+            "id": "550e8400-e29b-41d4-a716-446655440000",
+            "title": "Early Access Request from John Doe",
+            "description": "Interested in Complete Health Platform",
+            "created_at": "2024-09-11T10:30:00Z",
+            "status": "PENDING"
+          }
+        ]
+      }
+    },
+    "staff_users_list": {
+      "description": "Get list of staff users for assignment purposes",
+      "method": "GET",
+      "endpoint": "/api/dashboard/admin/staff-users/",
+      "headers": {
+        "Authorization": "Bearer <admin_jwt_token>",
+        "Content-Type": "application/json"
+      },
+      "expected_response": [
+        {
+          "id": 1,
+          "username": "admin",
+          "first_name": "Admin",
+          "last_name": "User",
+          "full_name": "Admin User",
+          "email": "admin@aevum.co.in"
+        },
+        {
+          "id": 2,
+          "username": "support",
+          "first_name": "Support",
+          "last_name": "Team",
+          "full_name": "Support Team",
+          "email": "support@aevum.co.in"
+        }
+      ]
+    }
+  },
+  "category_choices": [
+    {
+      "value": "GENERAL",
+      "display": "General Inquiry"
+    },
+    {
+      "value": "SUPPORT",
+      "display": "Technical Support"
+    },
+    {
+      "value": "BILLING",
+      "display": "Billing & Pricing"
+    },
+    {
+      "value": "FEATURE",
+      "display": "Feature Request"
+    },
+    {
+      "value": "BUG",
+      "display": "Bug Report"
+    },
+    {
+      "value": "PARTNERSHIP",
+      "display": "Partnership Inquiry"
+    },
+    {
+      "value": "MEDIA",
+      "display": "Media & Press"
+    },
+    {
+      "value": "OTHER",
+      "display": "Other"
+    }
+  ],
+  "status_choices": [
+    {
+      "value": "NEW",
+      "display": "New Message"
+    },
+    {
+      "value": "READ",
+      "display": "Message Read"
+    },
+    {
+      "value": "IN_PROGRESS",
+      "display": "Response In Progress"
+    },
+    {
+      "value": "RESPONDED",
+      "display": "Response Sent"
+    },
+    {
+      "value": "RESOLVED",
+      "display": "Issue Resolved"
+    },
+    {
+      "value": "CLOSED",
+      "display": "Closed"
+    }
+  ],
+  "priority_choices": [
+    {
+      "value": "LOW",
+      "display": "Low Priority"
+    },
+    {
+      "value": "MEDIUM",
+      "display": "Medium Priority"
+    },
+    {
+      "value": "HIGH",
+      "display": "High Priority"
+    },
+    {
+      "value": "URGENT",
+      "display": "Urgent"
+    }
+  ]
+} 

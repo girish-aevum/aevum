@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank you for your interest in Aevum Health!</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .email-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 552px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #6366f1;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #64748b;
+            font-size: 16px;
+        }
+        .content {
+            margin-bottom: 30px;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            font-weight: 600;
+            color: #4a5568;
+        }
+        .info-value {
+            color: #2d3748;
+        }
+        .next-steps {
+            background-color: #f0f9ff;
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            color: #64748b;
+            font-size: 14px;
+        }
+        .footer a {
+            color: #6366f1;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .email-container {
+                max-width: 95%;
+                padding: 20px;
+            }
+            .info-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <div class="logo">Aevum Health</div>
+            <div class="subtitle">Your journey to personalized health starts here</div>
+        </div>
+        
+        <div class="content">
+            <h2 style="color: #1e293b; margin-bottom: 20px;">Thank you for your interest, {{ user_name }}! 🎉</h2>
+            
+            <p>We're thrilled that you're interested in joining the Aevum Health platform. Your request for early access has been received and we're excited to help you on your personalized health journey.</p>
+            
+            <div class="highlight-box">
+                <h3 style="margin: 0 0 10px 0;">✨ You're on the list!</h3>
+                <p style="margin: 0; opacity: 0.9;">We'll notify you as soon as early access becomes available.</p>
+            </div>
+            
+            <div class="info-row">
+                <span class="info-label">Request ID:</span>
+                <span class="info-value">{{ request_id }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Primary Interest:</span>
+                <span class="info-value">{{ interest }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Status:</span>
+                <span class="info-value" style="color: #059669; font-weight: 600;">Pending Review</span>
+            </div>
+            
+            <div class="next-steps">
+                <h4 style="margin: 0 0 15px 0; color: #1e40af;">📋 What happens next?</h4>
+                <ul style="margin: 0; padding-left: 20px;">
+                    <li><strong>Review:</strong> Our team will review your request within 24-48 hours</li>
+                    <li><strong>Priority Access:</strong> You'll be among the first to receive access based on your interests</li>
+                    <li><strong>Notification:</strong> We'll email you with your access credentials and getting started guide</li>
+                    <li><strong>Onboarding:</strong> Our team will help you set up your personalized health profile</li>
+                </ul>
+            </div>
+            
+            <h4 style="color: #1e293b; margin: 30px 0 15px 0;">🚀 What makes Aevum Health special?</h4>
+            <ul style="color: #4a5568; margin: 0 0 20px 0; padding-left: 20px;">
+                <li><strong>DNA Analysis:</strong> Comprehensive genetic insights for personalized health</li>
+                <li><strong>Mental Wellness:</strong> Advanced mood tracking with AI-powered insights</li>
+                <li><strong>AI Companion:</strong> Your personal health assistant available 24/7</li>
+                <li><strong>Holistic Approach:</strong> Nutrition, fitness, and wellness all in one platform</li>
+            </ul>
+            
+            <p>In the meantime, if you have any questions or want to learn more about our platform, feel free to reach out to us at <a href="mailto:{{ support_email }}" style="color: #6366f1;">{{ support_email }}</a>.</p>
+            
+            <p style="margin-top: 30px;">Thank you for choosing Aevum Health for your wellness journey!</p>
+            
+            <p style="margin: 0; font-weight: 600; color: #1e293b;">Best regards,<br>The Aevum Health Team</p>
+        </div>
+        
+        <div class="footer">
+            <p>This email was sent because you requested early access to Aevum Health.</p>
+            <p>
+                <a href="https://www.aevum.co.in">Visit our website</a> | 
+                <a href="mailto:{{ support_email }}">Contact Support</a>
+            </p>
+            <p style="margin-top: 20px; font-size: 12px; color: #94a3b8;">
+                © 2024 Aevum Health. All rights reserved.
+            </p>
+        </div>
+    </div>
+</body>
+</html> 
