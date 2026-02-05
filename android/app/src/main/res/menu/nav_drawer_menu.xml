@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@android:drawable/ic_menu_view"
+            android:title="Dashboard" />
+        
+        <item
+            android:id="@+id/nav_smart_journal"
+            android:icon="@android:drawable/ic_menu_edit"
+            android:title="Smart Journal" />
+        
+        <item
+            android:id="@+id/nav_mental_wellness"
+            android:icon="@android:drawable/ic_menu_agenda"
+            android:title="Mental Wellness" />
+        
+        <item
+            android:id="@+id/nav_nutrition"
+            android:icon="@android:drawable/ic_menu_compass"
+            android:title="Nutrition" />
+        
+        <item
+            android:id="@+id/nav_ai_companion"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="AI Companion" />
+        
+        <item
+            android:id="@+id/nav_ai_companion_raw"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="AI Companion Raw" />
+        
+        <item
+            android:id="@+id/nav_dna_profiling"
+            android:icon="@android:drawable/ic_menu_compass"
+            android:title="DNA Profiling" />
+    </group>
+    
+    <item android:title="Account">
+        <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@android:drawable/ic_menu_myplaces"
+                android:title="Profile" />
+            
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@android:drawable/ic_menu_preferences"
+                android:title="Settings" />
+            
+            <item
+                android:id="@+id/nav_change_password"
+                android:icon="@android:drawable/ic_lock_lock"
+                android:title="Change Password" />
+            
+            <item
+                android:id="@+id/nav_subscription"
+                android:icon="@android:drawable/ic_menu_info_details"
+                android:title="Subscription" />
+        </menu>
+    </item>
+    
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="Logout" />
+
+</menu>
+
