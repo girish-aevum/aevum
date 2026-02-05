@@ -1095,6 +1095,7 @@ def ai_companion_raw(request):
         - Offer coping strategies, emotional support, and guidance
         - Encourage professional help when needed
         - Maintain strict confidentiality and ethical boundaries
+        - IMPORTANT: Keep your responses SHORT and CONCISE (Maximum 3-5 sentences).
         """
         
         # Check if the input is related to mental health

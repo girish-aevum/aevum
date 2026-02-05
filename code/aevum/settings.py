@@ -39,6 +39,10 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 if 'testserver' not in ALLOWED_HOSTS:
     ALLOWED_HOSTS.append('testserver')
 
+# Add Android emulator host if not already present
+if '10.0.2.2' not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append('10.0.2.2')
+
 # AI / LLM SETTINGS
 GROQ_API_KEY = env('GROQ_API_KEY', default='')
 GROQ_MODEL = env('GROQ_MODEL', default='')
